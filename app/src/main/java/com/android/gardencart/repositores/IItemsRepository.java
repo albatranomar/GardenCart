@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IItemsRepository {
     List<Item> getItems();
+    List<String> getTags();
 }

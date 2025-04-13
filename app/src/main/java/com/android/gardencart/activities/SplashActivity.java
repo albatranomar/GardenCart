@@ -14,9 +14,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.android.gardencart.R;
+import com.android.gardencart.repositores.IItemsRepository;
+import com.android.gardencart.repositores.MockItems;
 
 public class SplashActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

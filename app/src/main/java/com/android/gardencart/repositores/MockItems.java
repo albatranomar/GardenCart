@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class MockItems implements IItemsRepository {
+    private final String[] allTags = new String[]{"organic", "local", "imported", "fresh", "seasonal"};
     private static MockItems instance;
     private List<Item> items;
 
@@ -20,6 +21,7 @@ public class MockItems implements IItemsRepository {
         return instance;
     }
 
+    @Override
     public List<Item> getItems() {
         if (items != null && !items.isEmpty()) {
             return items;
@@ -30,8 +32,6 @@ public class MockItems implements IItemsRepository {
                 "Cabbage", "Capsicum", "Carrot", "Cauliflower", "Cucumber",
                 "Papaya", "Potato", "Pumpkin", "Radish", "Tomato"
         };
-
-        String[] allTags = new String[]{"organic", "local", "imported", "fresh", "seasonal"};
 
         items = new ArrayList<>();
         Random random = new Random();
@@ -47,5 +47,10 @@ public class MockItems implements IItemsRepository {
         }
 
         return items;
+    }
+
+    @Override
+    public List<String> getTags() {
+        return Arrays.asList(allTags);
     }
 }

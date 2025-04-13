@@ -88,81 +88,15 @@
             />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <HorizontalScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarSize="0dp"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="2dp">
-
-            <LinearLayout
-                android:id="@+id/chipContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            <!-- All Button -->
-            <Button
-                android:id="@+id/buttonAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:paddingHorizontal="16dp"
-                android:layout_marginRight="8dp" />
-
-            <!-- Vegetables Button -->
-            <Button
-                android:id="@+id/buttonVegetables"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vegetables"
-                android:textColor="#00FF00"
-            android:textSize="16sp"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:layout_marginRight="8dp" />
-
-            <!-- Fruits Button -->
-            <Button
-                android:id="@+id/buttonFruits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fruits"
-                android:textColor="#00FF00"
-            android:textSize="16sp"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:layout_marginRight="8dp" />
-
-            <!-- Spice Button -->
-            <Button
-                android:id="@+id/buttonSpice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Spice"
-                android:textColor="#00FF00"
-            android:textSize="16sp"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:layout_marginRight="8dp" />
-
-            <!-- Heavy Food Button -->
-            <Button
-                android:id="@+id/buttonHeavyFood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Heavy food"
-                android:textColor="#00FF00"
-            android:textSize="16sp"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:layout_marginRight="8dp" />
-        </LinearLayout>
-
-    </HorizontalScrollView>
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_marginVertical="5dp"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
