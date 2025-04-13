@@ -1,7 +1,7 @@
 package com.android.gardencart.activities;
 
 import static com.android.gardencart.activities.LoginActivity.KEEP_LOGIN;
-import static com.android.gardencart.activities.LoginActivity.USER_DATA;
+import static com.android.gardencart.activities.LoginActivity.USER_USERNAME;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gardencart.R;
 import com.android.gardencart.adapters.CardAdapter;
 import com.android.gardencart.adapters.ChipAdapter;
+import com.android.gardencart.models.CartItem;
 import com.android.gardencart.models.Item;
 import com.android.gardencart.models.User;
 import com.android.gardencart.repositores.items.IItemsRepository;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rvTags, rvCards;
     private ImageButton ibLogout, ibSearch;
-    private TextView tvUsername;
+    private TextView tvUsername, tvCartItemsNumber;
     private EditText etSearch;
 
     private IItemsRepository itemsRepository;
@@ -76,14 +77,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupPreferences() {
-        Gson gson = new Gson();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         editor = prefs.edit();
 
-        String userData = prefs.getString(USER_DATA, null);
-        if (userData != null) {
+        String username = prefs.getString(USER_USERNAME, null);
+        if (username != null) {
             try {
-                user = gson.fromJson(userData, User.class);
+                user = usersRepository.getUserByUsername(username);
             } catch (Exception ex) {
                 Toast.makeText(MainActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         tvUsername = findViewById(R.id.tvUsername);
         etSearch = findViewById(R.id.etSearch);
         ibSearch = findViewById(R.id.ibSearch);
-
+        tvCartItemsNumber = findViewById(R.id.tvCartItemNumbers);
 
         ArrayList<String> tags = new ArrayList<>();
         tags.add("all");
@@ -107,13 +107,18 @@ public class MainActivity extends AppCompatActivity {
         rvTags.setLayoutManager(layoutManager);
         rvTags.setAdapter(chipAdapter);
 
-
-        cardAdapter = new CardAdapter(this, itemsRepository.getItems());
+        cardAdapter = new CardAdapter(this, itemsRepository.getItems(), this::onAddItemToCart);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         rvCards.setLayoutManager(gridLayoutManager);
         rvCards.setAdapter(cardAdapter);
 
         tvUsername.setText(user.getUsername());
+
+        int units = 0;
+        for (CartItem ci: user.getCart()) {
+            units += ci.getAmount();
+        }
+        tvCartItemsNumber.setText(units + "");
 
         ibLogout.setOnClickListener(this::onLogout);
         ibSearch.setOnClickListener(this::onSearchClick);
@@ -139,6 +144,32 @@ public class MainActivity extends AppCompatActivity {
 
         List<Item> filtered = itemsRepository.getItems().stream().filter(item -> item.getTags().contains(tag.toLowerCase())).collect(Collectors.toList());
         cardAdapter.setItems(filtered);
+    }
+
+    private void onAddItemToCart(Item item) {
+        boolean added = false;
+        for (CartItem i: user.getCart()) {
+            if (i.getId().equalsIgnoreCase(item.getId())) {
+                i.setAmount(i.getAmount() + 1);
+                added = true;
+                break;
+            }
+        }
+
+        if (!added) {
+            user.getCart().add(new CartItem(item.getId(), item.getName(), item.getImage(), item.getTags(), item.getPricePerUnit(), 1));
+        }
+
+        int units = 0;
+        for (CartItem ci: user.getCart()) {
+            units += ci.getAmount();
+        }
+
+        Gson gson = new Gson();
+        editor.putString(USERS_DATA, gson.toJson(usersRepository.getUsers()));
+        editor.commit();
+
+        tvCartItemsNumber.setText(units + " ");
     }
 
     private void onLogout(View v) {

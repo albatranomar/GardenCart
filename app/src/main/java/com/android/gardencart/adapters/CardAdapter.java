@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,10 +19,12 @@ import java.util.List;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
     private List<Item> items;
     private final Context context;
+    private final OnAddClickedListener listener;
 
-    public CardAdapter(Context context, List<Item> items) {
+    public CardAdapter(Context context, List<Item> items, OnAddClickedListener listener) {
         this.context = context;
         this.items = items;
+        this.listener = listener;
     }
 
     public void setItems(List<Item> items) {
@@ -42,6 +45,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.name.setText(item.getName());
         holder.price.setText(item.getPricePerUnit() + "$ / unit");
         holder.image.setImageResource(item.getImage());
+        holder.button.setOnClickListener(v -> this.listener.onClick(item));
     }
 
     @Override
@@ -49,15 +53,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         return items.size();
     }
 
+    public interface OnAddClickedListener {
+        void onClick(Item item);
+    }
+
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         TextView name, price;
         ImageView image;
+        ImageView button;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tvCardTitle);
             price = itemView.findViewById(R.id.tvCardPrice);
             image = itemView.findViewById(R.id.ivCardImage);
+            button = itemView.findViewById(R.id.ibAddToCart);
         }
     }
 }

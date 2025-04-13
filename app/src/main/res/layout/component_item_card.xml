@@ -12,7 +12,8 @@
         android:id="@+id/ivCardImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/veg" />
+        android:src="@drawable/veg"
+        />
 
     <TextView
         android:id="@+id/tvCardTitle"
@@ -31,6 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvCardTitle" />
 
     <ImageView
+        android:id="@+id/ibAddToCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/add_box_24"

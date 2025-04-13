@@ -23,7 +23,7 @@ import com.android.gardencart.repositores.users.MockUsers;
 import com.google.gson.Gson;
 
 public class LoginActivity extends AppCompatActivity {
-    static final String USER_DATA = "USER_DATA";
+    static final String USER_USERNAME = "USER_USERNAME";
     static final String KEEP_LOGIN = "KEEP_LOGIN";
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
@@ -55,18 +55,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setupPreferences() {
-        Gson gson = new Gson();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         editor = prefs.edit();
 
-        String userData = prefs.getString(USER_DATA, null);
-        if (userData != null) {
+        String username = prefs.getString(USER_USERNAME, null);
+        if (username != null) {
             try {
-                User user = gson.fromJson(userData, User.class);
-                if (prefs.getBoolean(KEEP_LOGIN, false)) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                User user = usersRepository.getUserByUsername(username);
+                if (user != null) {
+                    if (prefs.getBoolean(KEEP_LOGIN, false)) {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             } catch (Exception ex) {
                 Toast.makeText(LoginActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        editor.putString(USER_DATA, gson.toJson(u));
+        editor.putString(USER_USERNAME, u.getUsername());
         if (keepLoggedIn) {
             editor.putBoolean(KEEP_LOGIN, true);
         }
