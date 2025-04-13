@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class MockItems implements IItemsRepository {
-    private MockItems instance;
+    private static MockItems instance;
     private List<Item> items;
 
     public static MockItems getInstance() {
