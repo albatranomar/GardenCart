@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton ibLogout, ibSearch;
     private TextView tvUsername, tvCartItemsNumber;
     private EditText etSearch;
+    private ImageView ivCart;
 
     private IItemsRepository itemsRepository;
     private IUsersRepository usersRepository;
@@ -68,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
         setupRepository();
         setupPreferences();
+        setUpViews();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setUpViews();
     }
 
@@ -98,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         etSearch = findViewById(R.id.etSearch);
         ibSearch = findViewById(R.id.ibSearch);
         tvCartItemsNumber = findViewById(R.id.tvCartItemNumbers);
+        ivCart = findViewById(R.id.ivCart);
 
         ArrayList<String> tags = new ArrayList<>();
         tags.add("all");
@@ -122,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         ibLogout.setOnClickListener(this::onLogout);
         ibSearch.setOnClickListener(this::onSearchClick);
+        ivCart.setOnClickListener(this::onCartClicked);
     }
 
     private void onSearchClick(View v) {
@@ -182,5 +192,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void onCartClicked(View v) {
+        Intent intent = new Intent(MainActivity.this, CartActivity.class);
+        startActivity(intent);
     }
 }
