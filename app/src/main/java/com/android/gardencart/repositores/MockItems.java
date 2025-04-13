@@ -12,7 +12,7 @@ public class MockItems implements IItemsRepository {
     private MockItems instance;
     private List<Item> items;
 
-    public MockItems getInstance() {
+    public static MockItems getInstance() {
         if (instance == null) {
             instance = new MockItems();
         }
