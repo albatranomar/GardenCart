@@ -5,8 +5,8 @@ import java.util.List;
 public class CartItem extends Item {
     private int amount;
     
-    public CartItem(String id, String name, List<String> tags, double pricePerUnit, int amount) {
-        super(id, name, tags, pricePerUnit);
+    public CartItem(String id, String name, int image, List<String> tags, double pricePerUnit, int amount) {
+        super(id, name, image, tags, pricePerUnit);
         this.amount = amount;
     }
 

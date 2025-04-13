@@ -8,16 +8,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gardencart.R;
+import com.android.gardencart.adapters.CardAdapter;
 import com.android.gardencart.adapters.ChipAdapter;
 import com.android.gardencart.repositores.IItemsRepository;
 import com.android.gardencart.repositores.MockItems;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView rvTags;
+    private RecyclerView rvTags, rvCards;
     private IItemsRepository repository;
 
     @Override
@@ -42,11 +44,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpViews() {
         rvTags = findViewById(R.id.rvTags);
+        rvCards = findViewById(R.id.rvCards);
 
         ChipAdapter chipAdapter = new ChipAdapter(this, repository.getTags(), label -> Toast.makeText(MainActivity.this, label + " clicked", Toast.LENGTH_SHORT).show());
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvTags.setLayoutManager(layoutManager);
         rvTags.setAdapter(chipAdapter);
+
+        CardAdapter cardAdapter = new CardAdapter(this, repository.getItems());
+
+        // Set GridLayoutManager with 2 columns
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        rvCards.setLayoutManager(gridLayoutManager);
+        rvCards.setAdapter(cardAdapter);
+
     }
 }

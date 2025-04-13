@@ -1,5 +1,6 @@
 package com.android.gardencart.repositores;
 
+import com.android.gardencart.R;
 import com.android.gardencart.models.Item;
 
 import java.util.ArrayList;
@@ -33,17 +34,36 @@ public class MockItems implements IItemsRepository {
                 "Papaya", "Potato", "Pumpkin", "Radish", "Tomato"
         };
 
+        int[] vegetableImages = new int[]{
+                R.drawable.bean,
+                R.drawable.bitter_gourd,
+                R.drawable.bottle_gourd,
+                R.drawable.brinjal,
+                R.drawable.broccoli,
+                R.drawable.cabbage,
+                R.drawable.capsicum,
+                R.drawable.carrot,
+                R.drawable.cauliflower,
+                R.drawable.cucumber,
+                R.drawable.papaya,
+                R.drawable.potato,
+                R.drawable.pumpkin,
+                R.drawable.radish,
+                R.drawable.tomato
+        };
+
         items = new ArrayList<>();
         Random random = new Random();
 
         for (int i = 0; i < 15; i++) {
             String id = i + "#";
             String name = vegetableNames[i];
+            int image = vegetableImages[i];
             double price = 0.5 + (5.0 - 0.5) * random.nextDouble();
             Collections.shuffle(Arrays.asList(allTags));
             List<String> tags = Arrays.asList(allTags).subList(0, random.nextInt(3) + 1);
 
-            items.add(new Item(id, name, new ArrayList<>(tags), Math.round(price * 100.0) / 100.0));
+            items.add(new Item(id, name, image, new ArrayList<>(tags), Math.round(price * 100.0) / 100.0));
         }
 
         return items;

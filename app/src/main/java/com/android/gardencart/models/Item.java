@@ -6,12 +6,14 @@ import java.util.List;
 public class Item {
     private String id;
     private String name;
+    private int image;
     private List<String> tags;
     private double pricePerUnit;
 
-    public Item(String id, String name, List<String> tags, double pricePerUnit) {
+    public Item(String id, String name, int image, List<String> tags, double pricePerUnit) {
         this.id = id;
         this.name = name;
+        this.image = image;
         this.tags = (tags == null) ? new ArrayList<>() : tags;
         this.pricePerUnit = pricePerUnit;
     }
@@ -30,6 +32,14 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 
     public List<String> getTags() {
