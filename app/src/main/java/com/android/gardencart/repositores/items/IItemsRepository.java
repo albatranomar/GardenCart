@@ -1,4 +1,4 @@
-package com.android.gardencart.repositores;
+package com.android.gardencart.repositores.items;
 
 import com.android.gardencart.models.Item;
 

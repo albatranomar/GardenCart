@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:background="#F6EED8"
+    tools:context=".activities.LoginActivity">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/logo" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:hint="e.g. omar"
+            style="@style/edit_text_style" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:text="Password"/>
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"
+            android:hint="e.g. 1234"
+            style="@style/edit_text_style"
+            />
+
+        <CheckBox
+            android:id="@+id/cbKeepLoggedIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:text="Keep me logged in"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#6AA636"
+            android:text="Login"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
