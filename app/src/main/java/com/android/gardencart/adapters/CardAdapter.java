@@ -16,13 +16,17 @@ import com.android.gardencart.models.Item;
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
-
-    private final List<Item> items;
+    private List<Item> items;
     private final Context context;
 
     public CardAdapter(Context context, List<Item> items) {
         this.context = context;
         this.items = items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -38,8 +42,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.name.setText(item.getName());
         holder.price.setText(item.getPricePerUnit() + "$ / unit");
         holder.image.setImageResource(item.getImage());
-
-        // TODO: ADD DYNAMIC IMAGES
     }
 
     @Override
