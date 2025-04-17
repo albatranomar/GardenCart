@@ -1,6 +1,8 @@
 package com.android.gardencart.activities;
 
-import static com.android.gardencart.activities.LoginActivity.USER_USERNAME;
+import static com.android.gardencart.Constants.ITEMS_DATA;
+import static com.android.gardencart.Constants.USERS_DATA;
+import static com.android.gardencart.Constants.USER_USERNAME;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,15 +17,13 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gardencart.R;
-import com.android.gardencart.adapters.CardAdapter;
 import com.android.gardencart.adapters.CartItemAdapter;
-import com.android.gardencart.adapters.ChipAdapter;
 import com.android.gardencart.models.CartItem;
+import com.android.gardencart.models.Item;
 import com.android.gardencart.models.User;
 import com.android.gardencart.repositores.items.IItemsRepository;
 import com.android.gardencart.repositores.items.MockItems;
@@ -31,12 +31,9 @@ import com.android.gardencart.repositores.users.IUsersRepository;
 import com.android.gardencart.repositores.users.MockUsers;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
-    static final String USERS_DATA = "USERS_DATA";
-
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
     private User user;
@@ -98,7 +95,11 @@ public class CartActivity extends AppCompatActivity {
             }
             tvTotal.setText(String.format(Locale.CANADA,"Total: %.2f", total));
 
+            Item i = itemsRepository.getItemByItemId(item.getId());
+            i.setAvailableQuantity(i.getAvailableQuantity() + item.getAmount());
+
             Gson gson = new Gson();
+            editor.putString(ITEMS_DATA, gson.toJson(itemsRepository.getItems()));
             editor.putString(USERS_DATA, gson.toJson(usersRepository.getUsers()));
             editor.commit();
         });

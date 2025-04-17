@@ -15,6 +15,7 @@ import com.android.gardencart.R;
 import com.android.gardencart.models.Item;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
     private List<Item> items;
@@ -23,12 +24,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     public CardAdapter(Context context, List<Item> items, OnAddClickedListener listener) {
         this.context = context;
-        this.items = items;
+        this.items = items.stream().filter(i -> i.getAvailableQuantity() > 0).collect(Collectors.toList());
         this.listener = listener;
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
     public void setItems(List<Item> items) {
-        this.items = items;
+        this.items = items.stream().filter(i -> i.getAvailableQuantity() > 0).collect(Collectors.toList());
         notifyDataSetChanged();
     }
 

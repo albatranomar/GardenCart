@@ -1,7 +1,9 @@
 package com.android.gardencart.activities;
 
-import static com.android.gardencart.activities.LoginActivity.KEEP_LOGIN;
-import static com.android.gardencart.activities.LoginActivity.USER_USERNAME;
+import static com.android.gardencart.Constants.ITEMS_DATA;
+import static com.android.gardencart.Constants.KEEP_LOGIN;
+import static com.android.gardencart.Constants.USERS_DATA;
+import static com.android.gardencart.Constants.USER_USERNAME;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,8 +42,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
-    static final String USERS_DATA = "USERS_DATA";
-
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
     private User user;
@@ -157,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onAddItemToCart(Item item) {
+        Gson gson = new Gson();
+
         boolean added = false;
         for (CartItem i: user.getCart()) {
             if (i.getId().equalsIgnoreCase(item.getId())) {
@@ -166,8 +168,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        item.setAvailableQuantity(item.getAvailableQuantity() - 1);
+
         if (!added) {
-            user.getCart().add(new CartItem(item.getId(), item.getName(), item.getImage(), item.getTags(), item.getPricePerUnit(), 1));
+            user.getCart().add(new CartItem(item.getId(), item.getName(), item.getImage(), item.getTags(), item.getPricePerUnit(), 1, item.getAvailableQuantity()));
+        }
+
+        if (item.getAvailableQuantity() == 0) {
+            cardAdapter.setItems(cardAdapter.getItems());
         }
 
         int units = 0;
@@ -175,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
             units += ci.getAmount();
         }
 
-        Gson gson = new Gson();
+        editor.putString(ITEMS_DATA, gson.toJson(itemsRepository.getItems()));
         editor.putString(USERS_DATA, gson.toJson(usersRepository.getUsers()));
         editor.commit();
 

@@ -1,5 +1,8 @@
 package com.android.gardencart.activities;
 
+import static com.android.gardencart.Constants.KEEP_LOGIN;
+import static com.android.gardencart.Constants.USER_USERNAME;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,13 +21,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.android.gardencart.R;
 import com.android.gardencart.models.User;
+import com.android.gardencart.repositores.items.MockItems;
 import com.android.gardencart.repositores.users.IUsersRepository;
 import com.android.gardencart.repositores.users.MockUsers;
-import com.google.gson.Gson;
 
 public class LoginActivity extends AppCompatActivity {
-    static final String USER_USERNAME = "USER_USERNAME";
-    static final String KEEP_LOGIN = "KEEP_LOGIN";
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
 
@@ -86,10 +87,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onLogin(View v) {
-        Gson gson = new Gson();
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
         boolean keepLoggedIn = cbKeepLoggedIn.isChecked();
+
+        // TODO: REMOVE BACKDOOR
+        if (username.equalsIgnoreCase("reset_items")) {
+            MockItems.getInstance().resetItems();
+            Toast.makeText(LoginActivity.this, "😈 Ok!", Toast.LENGTH_SHORT).show();
+            etUsername.setText("");
+            return;
+        }
 
         User u = usersRepository.getUserByUsername(username);
         if (u == null) {

@@ -59,7 +59,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
     }
 
     public interface OnRemoveClickedListener {
-        void onClick(Item item);
+        void onClick(CartItem item);
     }
 
     public static class CartItemViewHolder extends RecyclerView.ViewHolder {

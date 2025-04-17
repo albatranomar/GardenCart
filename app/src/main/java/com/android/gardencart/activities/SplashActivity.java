@@ -1,6 +1,7 @@
 package com.android.gardencart.activities;
 
-import static com.android.gardencart.activities.MainActivity.USERS_DATA;
+import static com.android.gardencart.Constants.ITEMS_DATA;
+import static com.android.gardencart.Constants.USERS_DATA;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +19,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.android.gardencart.R;
+import com.android.gardencart.models.Item;
 import com.android.gardencart.models.User;
+import com.android.gardencart.repositores.items.MockItems;
 import com.android.gardencart.repositores.users.MockUsers;
 import com.google.gson.Gson;
 
@@ -45,12 +48,19 @@ public class SplashActivity extends AppCompatActivity {
 
         ivLogo.setAnimation(logoAnimation);
 
+        Gson gson = new Gson();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         String usersData = prefs.getString(USERS_DATA, null);
         if (usersData != null) {
-            Gson gson = new Gson();
             List<User> users = Arrays.asList(gson.fromJson(usersData, User[].class));
             MockUsers.getInstance().setUsers(users);
+        }
+
+        String itemsData = prefs.getString(ITEMS_DATA, null);
+        if (itemsData != null) {
+            List<Item> fetchedItems = Arrays.asList(gson.fromJson(itemsData, Item[].class));
+            MockItems.getInstance().putItems(fetchedItems);
         }
     }
 
