@@ -9,13 +9,15 @@ public class Item {
     private int image;
     private List<String> tags;
     private double pricePerUnit;
+    private int availableQuantity;
 
-    public Item(String id, String name, int image, List<String> tags, double pricePerUnit) {
+    public Item(String id, String name, int image, List<String> tags, double pricePerUnit, int availableQuantity) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.tags = (tags == null) ? new ArrayList<>() : tags;
         this.pricePerUnit = pricePerUnit;
+        this.availableQuantity = availableQuantity;
     }
 
     public String getId() {
@@ -56,6 +58,14 @@ public class Item {
 
     public void setPricePerUnit(double pricePerUnit) {
         this.pricePerUnit = pricePerUnit;
+    }
+
+    public int getAvailableQuantity() {
+        return availableQuantity;
+    }
+
+    public void setAvailableQuantity(int availableQuantity) {
+        this.availableQuantity = availableQuantity;
     }
 
     @Override
