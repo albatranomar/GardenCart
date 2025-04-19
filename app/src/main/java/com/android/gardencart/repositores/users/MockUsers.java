@@ -1,11 +1,8 @@
 package com.android.gardencart.repositores.users;
 
-import android.util.Log;
-
 import com.android.gardencart.models.User;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +13,7 @@ public class MockUsers implements IUsersRepository {
 
     public MockUsers() {
         users = new ArrayList<>();
-        users.add(new User("omar", "omar"));
+        users.add(new User("omar", "1234"));
         users.add(new User("ali", "ali"));
         users.add(new User("ahmad", "ahmad"));
     }
@@ -32,7 +29,7 @@ public class MockUsers implements IUsersRepository {
     @Override
     public List<User> getUsers() {
         if (users.isEmpty()) {
-            users.add(new User("omar", "omar"));
+            users.add(new User("omar", "1234"));
             users.add(new User("ali", "ali"));
             users.add(new User("ahmad", "ahmad"));
         }

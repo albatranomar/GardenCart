@@ -8,12 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gardencart.R;
 import com.android.gardencart.models.CartItem;
-import com.android.gardencart.models.Item;
 
 import java.util.List;
 
